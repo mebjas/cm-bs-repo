@@ -5,5 +5,5 @@ package todofy.cm.app;
  */
 
 public class Courses {
-    public  static  String[] items = new String[]{"1", "2", "three"};
+    public  static  String[] items = new String[]{"Course1", "Course2", "Course3", "Course4", "Course5"};
 }

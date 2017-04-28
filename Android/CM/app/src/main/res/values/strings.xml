@@ -6,9 +6,11 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_reset">RESET</string>
+    <string name="btn_set_reminder">SET REMINDER</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_forgot_password">Forgot Password? Reset Now.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
+    <string name="prefix_reminder_title">Reminder for course: </string>
 </resources>
