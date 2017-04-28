@@ -29,6 +29,15 @@ if (isset($_POST['code']) && isset($_POST['password']) && isset($_POST['email'])
     $email = $_POST['email'];
     $code = $db->resetPassword($email);
 
+    // the message
+    $msg = "Code to reset password: " .$code;
+
+    // use wordwrap() if lines are longer than 70 characters
+    $msg = wordwrap($msg,70);
+
+    // send email
+    mail($email,"Reset password", $msg);
+
     // todo - send a mail and stuff
     // return success
     $response['error'] = FALSE;
