@@ -14,12 +14,14 @@
 1. Open `Android/CM/` in android studio
 2. Make the project once.
 3. Edit `Android/CM/app/src/main/java/todofy/cm/app/AppConfig.java` with correct urls corresponding to your localhost
-4. Make again
-5. Run on emulator
+4. Edit `Android/CM/app/src/main/java/todofy/cm/app/Courses.java` with course names in array
+5. Make again
+6. Run on emulator
 
 ## Screenshots
 Login ![Login](SCREENSHOTS/Screenshot_20170428-222330.png)
 Register ![Register](SCREENSHOTS/Screenshot_20170428-222340.png)
 Reset Password ![Reset](SCREENSHOTS/Screenshot_20170428-222606.png)
-dashboard - to be done
+dashboard - ![dashboard](SCREENSHOTS/dashboard.png)
+![dashboard](SCREENSHOTS/setting reminder.png)
 Reset password web: to be done
