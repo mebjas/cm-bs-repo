@@ -56,9 +56,7 @@ class DB_Functions {
      */
     public function getUserByEmailAndPassword($email, $password) {
 
-        $stmt = $this->conn->prepare("SELECT *, sessions.* FROM users 
-            LEFT JOIN sessions on sessions.user_id = users.id
-            WHERE email = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
 
         $stmt->bind_param("s", $email);
 
@@ -82,6 +80,36 @@ class DB_Functions {
         } else {
             return NULL;
         }
+    }
+
+    public function resetPassword($email) {
+        $code = substr(md5(uniqid()), 0, 4);
+        $stmt = $this->conn->prepare("UPDATE users SET reset_code = ? WHERE email = ?");
+        $stmt->bind_param("ss", $code, $email);
+        $stmt->execute();
+        return $code;
+    }
+
+    public function setNewPassword($email, $password, $code) {
+        $stmt = $this->conn->prepare("SELECT * FROM `users` WHERE `email` = ? AND `reset_code` = ?");
+
+        $stmt->bind_param("ss", $email, $code);
+
+        if ($stmt->execute()) {
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            $hash = $this->hashSSHA($password);
+            $encrypted_password = $hash["encrypted"]; // encrypted password
+            $salt = $hash["salt"]; // salt
+            $stmt = $this->conn->prepare("UPDATE `users` SET encrypted_password = ? , salt = ? WHERE `email` = ?");
+            $stmt->bind_param("sss", $encrypted_password, $salt, $email);
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
