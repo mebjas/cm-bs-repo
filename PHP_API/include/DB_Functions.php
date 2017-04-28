@@ -74,9 +74,9 @@ class DB_Functions {
             if ($encrypted_password == $hash) {
                 // user authentication details are correct
 
-                if ($user['session_id'] == null) {
-                    $user['session_id'] = $this->createSession($user);
-                }
+                // if ($user['session_id'] == null) {
+                //     $user['session_id'] = $this->createSession($user);
+                // }
                 return $user;
             }
         } else {
