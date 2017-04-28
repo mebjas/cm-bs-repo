@@ -36,8 +36,9 @@ import todofy.cm.helper.SessionManager;
 public class ForgotPassword extends AppCompatActivity {
     private static final String TAG = ForgotPassword.class.getSimpleName();
     private Button btnReset, btnLinkToLogin;
-    private EditText inputEmail;
+    private EditText inputEmail, inputCode, inputPassword;
     private ProgressDialog pDialog;
+    private int resetState = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,8 @@ public class ForgotPassword extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         inputEmail = (EditText) findViewById(R.id.email);
+        inputCode = (EditText) findViewById(R.id.code);
+        inputPassword = (EditText) findViewById(R.id.password);
         btnReset = (Button) findViewById(R.id.btnResetPassword);
         btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 
@@ -56,14 +59,27 @@ public class ForgotPassword extends AppCompatActivity {
         btnReset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String email = inputEmail.getText().toString().trim();
+                if (resetState == 0) {
 
-                if (!email.isEmpty()) {
-                    resetPassword(email);
+                    if (!email.isEmpty()) {
+                        resetPassword(email);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "Please enter your details!", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
-                            .show();
+                    String code = inputCode.getText().toString().trim();
+                    String password = inputPassword.getText().toString().trim();
+                    if (!code.isEmpty() && !password.isEmpty()) {
+                        resetPassword(email, code, password);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "Please enter your details!", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 }
+
             }
         });
 
@@ -105,14 +121,10 @@ public class ForgotPassword extends AppCompatActivity {
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
 
-                        Toast.makeText(getApplicationContext(), "Password reset email sent to your email id!", Toast.LENGTH_LONG).show();
-
-                        // Launch login activity
-                        Intent intent = new Intent(
-                                ForgotPassword.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        Toast.makeText(getApplicationContext(), "Enter New Password & Code and press reset", Toast.LENGTH_LONG).show();
+                        resetState++;
+                        inputCode.setVisibility(View.VISIBLE);
+                        inputPassword.setVisibility(View.VISIBLE);
                     } else {
 
                         // Error occurred in registration. Get the error
@@ -148,6 +160,71 @@ public class ForgotPassword extends AppCompatActivity {
         };
         queue.add(strReq);
     }
+
+    private void resetPassword(final String email, final String code, final  String password) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_register";
+
+        pDialog.setMessage("Resetting ...");
+        showDialog();
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest strReq = new StringRequest(Method.POST,
+                AppConfig.URL_RESET, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response: " + response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+
+                        Toast.makeText(getApplicationContext(), "Password Reset successfully login now", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(getApplicationContext(),
+                                MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("code", code);
+                params.put("password", password);
+                params.put("email", email);
+                return params;
+            }
+
+        };
+        queue.add(strReq);
+    }
+
 
     private void showDialog() {
         if (!pDialog.isShowing())

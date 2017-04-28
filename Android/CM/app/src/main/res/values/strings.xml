@@ -3,6 +3,8 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
+    <string name="hint_code">Code</string>
+    <string name="hint_new_password">New Password</string>
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_reset">RESET</string>
