@@ -13,13 +13,12 @@
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/name"
-                android:text="Minhaz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -27,34 +26,33 @@
                 android:textSize="24dp" />
 
             <Button
+                android:layout_alignParentRight="true"
                 android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dip"
-                android:background="@null"
+                android:background="@color/bg_register"
                 android:text="@string/btn_logout"
                 android:textAllCaps="false"
                 android:textColor="@color/btn_logut_bg"
                 android:textSize="15sp"
                 android:padding="0dp"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/email"
-                android:text="Minhazav@gmail.com"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btnProfile"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:paddingLeft="5dp"/>
-
-
-        </LinearLayout>
-
+                android:background="@color/bg_register"
+                android:text="@string/btn_setting"
+                android:textAllCaps="false"
+                android:textColor="@color/input_login_hint"
+                android:textSize="15sp"
+                android:padding="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/btnLogout"
+                android:layout_toStartOf="@+id/btnLogout" />
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -70,45 +68,73 @@
         android:layout_alignLeft="@+id/linearLayout"
         android:layout_alignStart="@+id/linearLayout" />
 
-    <Spinner
-        android:id="@+id/SelectCourse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SelectCourseTitle"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:spinnerMode="dropdown" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/SelectDateTimeView"
+        android:layout_below="@+id/SelectCourseTitle"
         android:orientation="vertical"
-        android:layout_below="@+id/SelectCourse"
-        android:layout_marginTop="10dp"
-        android:padding="20dp"
-        android:scrollbars="vertical"
-        android:visibility="invisible">
-
-        <TextView
+        android:gravity="right">
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/subtitleSetReminder"
-            android:layout_marginBottom="10dp">
-            </TextView>
+            android:hint="Enter Course Name"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
         <Button
-            android:id="@+id/btnSetReminder"
-            android:layout_width="match_parent"
+            android:id="@+id/btnSearch"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
             android:background="@color/bg_register"
-            android:text="@string/btn_set_reminder"
+            android:text="@string/btn_search"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/input_login_hint"
             android:textSize="15sp"
-            android:padding="0dp"/>
+            android:padding="0dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"/>
     </LinearLayout>
+
+    <!--<Spinner-->
+        <!--android:id="@+id/SelectCourse"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/SelectCourseTitle"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:spinnerMode="dropdown" />-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/SelectDateTimeView"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_below="@+id/SelectCourseTitle"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:padding="20dp"-->
+        <!--android:scrollbars="vertical"-->
+        <!--android:visibility="visible">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/subtitleSetReminder"-->
+            <!--android:layout_marginBottom="10dp">-->
+            <!--</TextView>-->
+        <!--<Button-->
+            <!--android:id="@+id/btnSetReminder"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dip"-->
+            <!--android:background="@color/bg_register"-->
+            <!--android:text="@string/btn_add_fav"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="15sp"-->
+            <!--android:padding="0dp"/>-->
+    <!--</LinearLayout>-->
 
 
 </RelativeLayout>

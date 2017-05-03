@@ -41,7 +41,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private TextView txtName;
     private TextView txtEmail, txtSubtitle;
-    private Button btnLogout, btnSetReminder;
+    private Button btnLogout, btnSetReminder, btnProfile;
     private LinearLayout setReminderView;
 
     private SQLiteHandler db;
@@ -59,11 +59,13 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         txtName = (TextView) findViewById(R.id.name);
-        txtEmail = (TextView) findViewById(R.id.email);
-        txtSubtitle = (TextView) findViewById(R.id.subtitleSetReminder);
+//        txtEmail = (TextView) findViewById(R.id.email);
+//        txtSubtitle = (TextView) findViewById(R.id.subtitleSetReminder);
         btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnSetReminder = (Button) findViewById(R.id.btnSetReminder);
-        setReminderView = (LinearLayout) findViewById(R.id.SelectDateTimeView);
+        btnProfile = (Button) findViewById(R.id.btnProfile);
+
+//        btnSetReminder = (Button) findViewById(R.id.btnSetReminder);
+//        setReminderView = (LinearLayout) findViewById(R.id.SelectDateTimeView);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -87,7 +89,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Displaying the user details on the screen
         txtName.setText(name);
-        txtEmail.setText(email);
+//        txtEmail.setText(email);
 
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -98,33 +100,44 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        final Spinner dropdown = (Spinner) findViewById(R.id.SelectCourse);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Courses.items);
-        dropdown.setAdapter(adapter);
-
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setReminderView.setVisibility(View.VISIBLE);
-                txtSubtitle.setText("Set Reminder for " +Courses.items[i] +" in your calendar.");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                setReminderView.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        btnSetReminder.setOnClickListener(new View.OnClickListener() {
+        // Profile button click event
+        btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),
-                        "Setting course reminder", Toast.LENGTH_LONG)
-                        .show();
-
-                addReminder(Courses.items[(int)(dropdown.getSelectedItemId())]);
+                Intent i = new Intent(getApplicationContext(),
+                        ProfileActivity.class);
+                startActivity(i);
+                finish();
             }
         });
+
+//        final Spinner dropdown = (Spinner) findViewById(R.id.SelectCourse);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Courses.items);
+//        dropdown.setAdapter(adapter);
+
+//        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                setReminderView.setVisibility(View.VISIBLE);
+//                txtSubtitle.setText("Set Reminder for " +Courses.items[i] +" in your calendar.");
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                setReminderView.setVisibility(View.INVISIBLE);
+//            }
+//        });
+
+//        btnSetReminder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(),
+//                        "Setting course reminder", Toast.LENGTH_LONG)
+//                        .show();
+//
+//                addReminder(Courses.items[(int)(dropdown.getSelectedItemId())]);
+//            }
+//        });
 
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
