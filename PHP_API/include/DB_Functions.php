@@ -112,6 +112,89 @@ class DB_Functions {
         return false;
     }
 
+    public function deleteProfile($email, $password) {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+
+        if ($stmt->execute()) {
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            // verifying user password
+            $id = $user['id'];
+            $salt = $user['salt'];
+            $encrypted_password = $user['encrypted_password'];
+            $hash = $this->checkhashSSHA($salt, $password);
+            // check for password equality
+            if ($encrypted_password == $hash) {
+                // delete
+                return $this->_deleteAccount($email);
+            }
+        } else {
+            return FALSE;
+        }
+    }
+
+    private function _deleteAccount($email) {
+        $stmt = $this->conn->prepare("DELETE FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+        return false;
+    }
+
+    public function updateProfile($email, $name, $password, $newpassword) {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+
+        if ($stmt->execute()) {
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            // verifying user password
+            $id = $user['id'];
+            $salt = $user['salt'];
+            $encrypted_password = $user['encrypted_password'];
+            $hash = $this->checkhashSSHA($salt, $password);
+            // check for password equality
+            if ($encrypted_password == $hash) {
+                // correct password
+                if (!$this->_updateUser($email, $name, $id)) return NULL;
+                if (strlen(trim($newpassword))) {
+                    if (!$this->_updateUserPassword($newpassword, $id)) return NULL;
+                }
+                return $user;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    private function _updateUser($email, $name, $id) {
+        $stmt = $this->conn->prepare("UPDATE `users` SET name = ? , email = ? WHERE `id` = ?");
+        $stmt->bind_param("sss", $name, $email, $id);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+        return false;
+    }
+
+    private function _updateUserPassword($newpassword, $id) {
+        $hash = $this->hashSSHA($newpassword);
+        $encrypted_password = $hash["encrypted"]; // encrypted password
+        $salt = $hash["salt"]; // salt
+        $stmt = $this->conn->prepare("UPDATE `users` SET encrypted_password = ? , salt = ? WHERE `id` = ?");
+        $stmt->bind_param("sss", $encrypted_password, $salt, $id);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Get user by email and password
      */
