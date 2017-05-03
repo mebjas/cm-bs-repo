@@ -21,13 +21,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.text.Editable;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.view.ViewGroup;
+import android.text.TextWatcher;
 import android.widget.Toast;
 import android.content.ContentValues;
 import android.provider.CalendarContract.Events;
@@ -64,6 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
     private Button btnLogout, btnSetReminder, btnProfile;
     private LinearLayout setReminderView;
     private ListView listCourses;
+    private EditText selectCourse;
 
     private SQLiteHandler db;
     private SessionManager session;
@@ -92,6 +96,7 @@ public class DashboardActivity extends AppCompatActivity {
         btnProfile = (Button) findViewById(R.id.btnProfile);
         listCourses = (ListView) findViewById(R.id.listCourses);
 
+        // load the courses
         listLoaded = new ArrayList<Course>();
         listSearched = new ArrayList<Course>();
         loadCourses();
@@ -101,13 +106,37 @@ public class DashboardActivity extends AppCompatActivity {
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.listCourses);
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//        });
 
+        // add on key up listener
+        selectCourse = (EditText) findViewById(R.id.ETSelectCourse);
+        selectCourse.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                listSearched.clear();
+                if(s.length() != 0) {
+                    for (int i = 0; i < listLoaded.size(); i++) {
+                        if (listLoaded.get(i).title.toLowerCase().indexOf(s.toString().toLowerCase()) != -1) {
+                            listSearched.add(listLoaded.get(i));
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < listLoaded.size(); i++) {
+                        listSearched.add(listLoaded.get(i));
+                    }
+                }
+
+            }
+        });
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
@@ -147,34 +176,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-//        final Spinner dropdown = (Spinner) findViewById(R.id.SelectCourse);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Courses.items);
-//        dropdown.setAdapter(adapter);
-
-//        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                setReminderView.setVisibility(View.VISIBLE);
-//                txtSubtitle.setText("Set Reminder for " +Courses.items[i] +" in your calendar.");
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                setReminderView.setVisibility(View.INVISIBLE);
-//            }
-//        });
-
-//        btnSetReminder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),
-//                        "Setting course reminder", Toast.LENGTH_LONG)
-//                        .show();
-//
-//                addReminder(Courses.items[(int)(dropdown.getSelectedItemId())]);
-//            }
-//        });
-
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
 
@@ -209,7 +210,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest strReq = new StringRequest(Request.Method.GET,
-                AppConfig.URL_COURSES, new Response.Listener<String>() {
+                AppConfig.URL_COURSES(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

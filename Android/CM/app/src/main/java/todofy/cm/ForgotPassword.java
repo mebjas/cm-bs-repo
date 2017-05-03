@@ -109,7 +109,7 @@ public class ForgotPassword extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_RESET, new Response.Listener<String>() {
+                AppConfig.URL_RESET(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -170,7 +170,7 @@ public class ForgotPassword extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_RESET, new Response.Listener<String>() {
+                AppConfig.URL_RESET(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

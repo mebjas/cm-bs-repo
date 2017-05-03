@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_LOGIN, new Response.Listener<String>() {
+                AppConfig.URL_LOGIN(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

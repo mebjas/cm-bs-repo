@@ -188,7 +188,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_DELETE, new Response.Listener<String>() {
+                AppConfig.URL_DELETE(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -255,7 +255,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_UPDATE, new Response.Listener<String>() {
+                AppConfig.URL_UPDATE(), new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

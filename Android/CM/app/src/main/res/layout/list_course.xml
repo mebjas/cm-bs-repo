@@ -24,7 +24,7 @@
                 android:id="@+id/description"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:text="HomeTow ssd dsf sfsdfsd fs sfsdfs sdfdsfs  sfdsfds  sfdfsdfsdf sdfsdfn"
+                android:text="a qucik brown fox jumped over a lazy cat. For no reason it just jumped over the cat."
                 android:textColor="@color/colorAccent"/>
         </LinearLayout>
         <Button
