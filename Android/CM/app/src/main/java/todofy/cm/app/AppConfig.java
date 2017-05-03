@@ -10,12 +10,15 @@ public class AppConfig {
     // Server user register url
     public static String URL_REGISTER = "http://192.168.1.10:9999/PHP_API/register.php";
 
-    // Server user register url
+    // Server user update url
     public static String URL_UPDATE = "http://192.168.1.10:9999/PHP_API/update.php";
 
-    // Server user register url
+    // Server user delete url
     public static String URL_DELETE = "http://192.168.1.10:9999/PHP_API/delete.php";
 
     // Server user register url
     public static String URL_RESET = "http://192.168.1.10:9999/PHP_API/reset.php";
+
+    // Get courses
+    public static String URL_COURSES = "http://192.168.1.10:9999/PHP_API/course.php";
 }

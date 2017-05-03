@@ -82,29 +82,29 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             />
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:background="@color/bg_register"
-            android:text="@string/btn_search"
-            android:textAllCaps="false"
-            android:textColor="@color/input_login_hint"
-            android:textSize="15sp"
-            android:padding="0dp"
-            android:layout_marginRight="10dp"
-            android:paddingLeft="10dp"/>
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/btnSearch"-->
+            <!--android:layout_width="170dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/bg_register"-->
+            <!--android:text="@string/btn_search"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/input_login_hint"-->
+            <!--android:textSize="15sp"-->
+            <!--android:padding="0dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:paddingLeft="10dp"/>-->
 
-    <!--<Spinner-->
-        <!--android:id="@+id/SelectCourse"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/SelectCourseTitle"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:layout_marginRight="20dp"-->
-        <!--android:spinnerMode="dropdown" />-->
+        <ListView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listCourses"
+            >
+            </ListView>
+    </LinearLayout>
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
