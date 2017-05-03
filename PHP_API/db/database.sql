@@ -14,7 +14,8 @@ create table users(
    updated_at datetime null
 ); /** Creating Users Table **/
 
-create table sessions(
-    user_id int(11) primary key,
-    session_id varchar(32)
+create table Courses(
+    id int(11) primary key auto_increment,
+    title varchar(100),
+    description text
 );

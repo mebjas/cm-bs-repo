@@ -19,7 +19,16 @@ class DB_Functions {
 
     // destructor
     function __destruct() {
-        
+    }
+
+    public function getCourses() {
+        $stmt = $this->conn->prepare("SELECT title, description FROM Courses");
+        if ($stmt->execute()) {
+            $courses = $stmt->get_result()->fetch_all();
+            $stmt->close();
+            return $courses;
+        }
+        return null;
     }
 
     /**
