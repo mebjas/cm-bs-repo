@@ -9,10 +9,13 @@ import todofy.cm.R;
 public class Course {
     public String title;
     public String description;
+    public int id;
     public boolean isFavorite;
 
-    public Course(String title, String description) {
+    public Course(String title, String description, int id, boolean isFav) {
         this.title = title;
         this.description = description;
+        this.isFavorite = isFav;
+        this.id = id;
     }
 }
