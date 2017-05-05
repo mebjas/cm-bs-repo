@@ -22,13 +22,47 @@ class DB_Functions {
     }
 
     public function getCourses() {
-        $stmt = $this->conn->prepare("SELECT title, description FROM Courses");
+        $stmt = $this->conn->prepare("SELECT id, title, description FROM Courses");
         if ($stmt->execute()) {
             $courses = $stmt->get_result()->fetch_all();
             $stmt->close();
             return $courses;
         }
         return null;
+    }
+
+    public function getMyFavs($uid, $email) {
+        // todo - auth
+        $stmt = $this->conn->prepare("SELECT `course_id` FROM `Course_Favorite` WHERE `user_id` = ?");
+        $stmt->bind_param("s", $uid);
+        if ($stmt->execute()) {
+            $courses = $stmt->get_result()->fetch_all();
+            $stmt->close();
+            $courseIds = array();
+            foreach($courses as $course) {
+                $courseIds[] = $course[0];
+            }
+            return $courseIds;
+        }
+        return null;
+    }
+
+    public function unsetFav($uid, $cid) {
+        $stmt = $this->conn->prepare("DELETE FROM `Course_Favorite` WHERE `user_id` = ? AND `course_id` = ?");
+        $stmt->bind_param("si", $uid, $cid);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+        return null;
+    }
+
+    public function setFav($uid, $cid) {
+        $stmt = $this->conn->prepare("INSERT INTO Course_Favorite VALUES(?, ?)");
+        $stmt->bind_param("ss", $uid, $cid);
+        $result = $stmt->execute();
+        $stmt->close();
+        return true;
     }
 
     /**

@@ -19,3 +19,8 @@ create table Courses(
     title varchar(100),
     description text
 );
+
+create table Course_Favorite(
+    user_id varchar(23),
+    course_id int
+);
